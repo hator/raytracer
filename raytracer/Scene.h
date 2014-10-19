@@ -11,10 +11,10 @@ public:
 		Material *blueStone = new Material(Color::blue);
 		Material *redStone = new Material(Color::red);
 		Material *yellowStone = new Material(Color::yellow);
-		Material *glass = new Material(Color::black, Color::gray, Color::white);
+		Material *glass = new Material(Color::black, Color::gray, Color(0.95f, 0.95f, 0.95f), 1.46f);
 
-		objects.push_back(new Sphere(vec3(0, 0, 1.f), 0.5f, redStone));
-		//objects.push_back(new Sphere(vec3(-0.5f, 1.3f, -0.2f), 0.5f, blueStone));
+		objects.push_back(new Sphere(vec3(0, 0, 1.5f), 0.5f, redStone));
+		objects.push_back(new Sphere(vec3(0.1f, 0.1f, 0.4f), 0.1f, glass));
 		//objects.push_back(new Sphere(vec3(0, 0.5f, 0), 0.5f, yellowStone));
 		//objects.push_back(new Sphere(vec3(-0.3f, 0.65f, 0.8f), 0.2f, glass));
 		//objects.push_back(new Sphere(vec3(0.3f, 0.45f, 0.8f), 0.2f, glass));
@@ -39,7 +39,7 @@ public:
 
 	Color getAmbientLight() {
 		//for(light in lights) { ambient+=light.ambient }
-		return Color::gray;
+		return Color::darkBlue;
 	}
 
 	Light getLight() {

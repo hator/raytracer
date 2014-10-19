@@ -8,8 +8,8 @@
 
 
 int main(int argc, char* argv[]) {
-	int width = 1920;
-	int height = 1080;
+	int width = 640;
+	int height = 480;
 	
 	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_EVENTS) != 0) {
 		fprintf(stderr, "SDL error: %s\n", SDL_GetError());
@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	Camera camera(vec3(0, 0, 0), vec3(0, 1.f, 0), vec3(0, 0, 1.f), Pi/2.f, fl(width)/height);
 
 	Renderer r(camera, scene);
-	r.render(buffer, width, height, 3, 5);
+	r.render(buffer, width, height, 3, 1);
 
 
 	/**************************/

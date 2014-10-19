@@ -5,7 +5,7 @@
 
 class Renderer {
 public:
-	Renderer(Camera& camera, Scene& scene) : camera(camera), s(scene) {}
+	Renderer(Camera& camera, Scene& scene) : camera(camera), scene(scene) {}
 
 	void render(ColorRGB* buffer, int width, int height, int maxDepth, int samplesPerPixel) {
 		for(int y=0; y < height; y++) {
@@ -21,7 +21,7 @@ private:
 		Color color = Color::black;
 		for(int i=0; i < samplesPerPixel; i++) {
 			ray = primRay(x + 0.5f - uRand(), y + 0.5f - uRand(), width, height);
-			color = color + trace(s, ray);
+			color = color + trace(ray, maxDepth);
 		}
 		return color/fl(samplesPerPixel);
 	}
@@ -38,20 +38,44 @@ private:
 	}
 	
 
-	Color trace(Scene& scene, Ray& ray) {
+	Color trace(Ray& ray, int depth) {
 		Hit hit = scene.castRay(ray);
 		if(hit.distance == infinity) {
 			return scene.getAmbientLight();
 		}
 
-		vec3 normal = hit.normal;
+		Color refraction = hit.obj->material->refraction;
+		
+		if(depth > 0) {
+			if(refraction!=Color::black) {
+				refraction = refraction * trace(refract(ray, hit), depth-1);
+			}
+		}
 
+		return refraction + hit.obj->material->diffuse* lambert(hit);
+	}
 
-		return Color::red * lambert(scene, hit);
+	Ray refract(Ray& ray, Hit& hit) {
+		float ior = hit.obj->material->indexOfRefraction;
+		float d = hit.normal.dot(-ray.head);
+		float ir, a;
+		if( d < 0.f) {
+			ir = ior;
+			a = -1.f;
+			d *= -1.f;
+		} else {
+			ir = 1.f/ior;
+			a = 1.f;
+		}
+
+		float i = 1.f - ir*ir*(1.f - d*d);
+		vec3 head = hit.normal*a*(ir*d - sqrt(i)) - (-ray.head)*ir;
+
+		return Ray(hit.point, head.unit());
 	}
 
 
-	Color lambert(Scene& scene, Hit& hit) {
+	Color lambert(Hit& hit) {
 		vec3 toLight = hit.point - scene.getLight().position;
 		vec3 toLightDir = toLight.unit();
 		float cosNL = hit.normal.dot(toLightDir);
@@ -64,12 +88,9 @@ private:
 		} else {
 			return scene.getAmbientLight()+scene.getLight().brightness*cosNL;
 		}
-
-
-		return Color::white;
 	}
 
 
 	Camera& camera;
-	Scene& s;
+	Scene& scene;
 };
