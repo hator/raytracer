@@ -39,20 +39,23 @@ private:
 	
 
 	Color trace(Ray& ray, int depth) {
+		if(depth == 0) return Color::black;
 		Hit hit = scene.castRay(ray);
 		if(hit.distance == infinity) {
 			return scene.getAmbientLight();
 		}
 
 		Color refraction = hit.obj->material->refraction;
-		
-		if(depth > 0) {
-			if(refraction!=Color::black) {
-				refraction = refraction * trace(refract(ray, hit), depth-1);
-			}
+		Color reflection = hit.obj->material->reflection;
+		Color diffuse = hit.obj->material->diffuse * lambert(hit);
+		if(refraction!=Color::black) {
+			refraction = refraction * trace(refract(ray, hit), depth-1);
+		}
+		if(reflection!=Color::black) {
+			reflection = reflection * trace(reflect(ray, hit), depth-1);
 		}
 
-		return refraction + hit.obj->material->diffuse* lambert(hit);
+		return refraction + reflection + diffuse;
 	}
 
 	Ray refract(Ray& ray, Hit& hit) {
@@ -74,6 +77,10 @@ private:
 		return Ray(hit.point, head.unit());
 	}
 
+	Ray reflect(Ray& ray, Hit& hit) {
+		vec3 head = hit.normal * (hit.normal.dot(-ray.head)*2.f) + ray.head;
+		return Ray(hit.point, head.unit());
+	}
 
 	Color lambert(Hit& hit) {
 		vec3 toLight = hit.point - scene.getLight().position;
