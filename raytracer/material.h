@@ -20,7 +20,3 @@ public:
 	{ }
 
 };
-
-Material
-	glass(Color(0.1f), Color(0.1f), Color(0.9f), 1.46f),
-	redStone(Color::red, Color::black);

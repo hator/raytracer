@@ -3,10 +3,10 @@
 
 #define fl(x) (static_cast<float>(x)) // cast to float
 
-std::numeric_limits<float> real;
-const float epsilon = real.epsilon();
-const float infinity = real.infinity();
-const float undefined = real.infinity();
+typedef std::numeric_limits<float> real;
+const float epsilon = real::epsilon();
+const float infinity = real::infinity();
+const float undefined = real::infinity();
 const float Pi = fl(M_PI);
 
 inline float uRand() { return fl(rand()) / fl(RAND_MAX); }

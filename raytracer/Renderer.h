@@ -38,7 +38,7 @@ private:
 	}
 	
 
-	Color trace(Ray& ray, int depth) {
+	Color trace(const Ray& ray, int depth) {
 		if(depth == 0) return Color::black;
 		Hit hit = scene.castRay(ray);
 		if(hit.distance == infinity) {
@@ -58,7 +58,7 @@ private:
 		return refraction + reflection + diffuse;
 	}
 
-	Ray refract(Ray& ray, Hit& hit) {
+	Ray refract(const Ray& ray, Hit& hit) {
 		float ior = hit.obj->material->indexOfRefraction;
 		float d = hit.normal.dot(-ray.head);
 		float ir, a;
@@ -77,7 +77,7 @@ private:
 		return Ray(hit.point, head.unit());
 	}
 
-	Ray reflect(Ray& ray, Hit& hit) {
+	Ray reflect(const Ray& ray, Hit& hit) {
 		vec3 head = hit.normal * (hit.normal.dot(-ray.head)*2.f) + ray.head;
 		return Ray(hit.point, head.unit());
 	}

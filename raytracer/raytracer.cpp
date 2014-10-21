@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	Camera camera(vec3(0, 0, 0), vec3(0, 1.f, 0), vec3(0, 0, 1.f), Pi/2.f, fl(width)/height);
 
 	Renderer r(camera, scene);
-	r.render(buffer, width, height, 3, 1);
+	r.render(buffer, width, height, 5, 100);
 
 
 	/**************************/

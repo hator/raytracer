@@ -3,3 +3,7 @@ Release
 ipch
 *.sdf
 *.opensdf
+
+# gcc output
+obj/
+ray

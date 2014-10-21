@@ -5,7 +5,7 @@
 
 #pragma once
 
-#include "targetver.h"
+//#include "targetver.h"
 
 typedef unsigned char uint8;
 #include <cstdlib>
