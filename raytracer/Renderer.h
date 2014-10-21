@@ -7,8 +7,8 @@ class Renderer {
 public:
 	Renderer(Camera& camera, Scene& scene) : camera(camera), scene(scene) {}
 
-	void render(ColorRGB* buffer, int width, int height, int maxDepth, int samplesPerPixel) {
-		for(int y=0; y < height; y++) {
+	void render(ColorRGB* buffer, int startY, int endY, int width, int height, int maxDepth, int samplesPerPixel) {
+		for(int y=startY; y < endY; y++) {
 			for(int x=0; x < width; x++) {
 				buffer[y*width+x] = ColorRGB(samplePixel(x, y, width, height, maxDepth, samplesPerPixel));
 			}
@@ -98,6 +98,6 @@ private:
 	}
 
 
-	Camera& camera;
-	Scene& scene;
+	const Camera& camera;
+	const Scene& scene;
 };

@@ -10,11 +10,11 @@ public:
 		initialize();
 	}
 
-	vec3 getUp() { return up; }
-	vec3 getRight() { return right; }
-	vec3 getFront() { return front; }
+	vec3 getUp() const { return up; }
+	vec3 getRight() const { return right; }
+	vec3 getFront() const { return front; }
 
-	vec3 getPosition() { return position; }
+	vec3 getPosition() const { return position; }
 
 private:
 	void initialize() {

@@ -5,7 +5,9 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "Renderer.h"
+#include <thread>
 
+#define NUM_THREADS 4
 
 int main(int argc, char* argv[]) {
 	int width = 640;
@@ -37,8 +39,20 @@ int main(int argc, char* argv[]) {
 	Scene scene;
 	Camera camera(vec3(0, 0, 0), vec3(0, 1.f, 0), vec3(0, 0, 1.f), Pi/2.f, fl(width)/height);
 
+	std::thread threads[NUM_THREADS];
+	int oneChunkHeight = height / NUM_THREADS;
+	int startY = 0;
 	Renderer r(camera, scene);
-	r.render(buffer, width, height, 5, 100);
+	for(int i = 0; i < NUM_THREADS; i++) {
+		threads[i] = std::thread([=, &r]() {
+			r.render(buffer, startY, startY + oneChunkHeight, width, height, 5, 100);
+		});
+		startY += oneChunkHeight;
+	}
+
+	for(int i = 0; i < NUM_THREADS; i++) {
+		threads[i].join();
+	}
 
 
 	/**************************/

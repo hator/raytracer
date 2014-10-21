@@ -1,4 +1,4 @@
-LDLIBS=$(shell sdl2-config --libs)
+LDLIBS=$(shell sdl2-config --libs) -pthread
 STATICLIBS=
 LDFLAGS=
 
@@ -9,7 +9,7 @@ DOXYGENCONF=doxygen.conf
 SRCDIR=raytracer
 OBJDIR=obj
 
-CPPFLAGS=-c -std=c++11 -I/usr/include/SDL2
+CPPFLAGS=-c -std=c++11 -I/usr/include/SDL2 -pthread
 
 DEBUG=True
 

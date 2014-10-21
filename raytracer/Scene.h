@@ -21,7 +21,7 @@ public:
 		//objects.push_back(new Sphere(vec3(0.3f, 0.45f, 0.8f), 0.2f, glass));
 	}
 	
-	Hit castRay(Ray r) {
+	Hit castRay(Ray r) const {
 		float nearest = undefined;
 		Object* o = nullptr;
 		for(auto it = objects.begin(); it != objects.end(); it++) {
@@ -38,7 +38,7 @@ public:
 		return Hit();
 	}
 
-	Color getAmbientLight() {
+	Color getAmbientLight() const {
 		//for(light in lights) { ambient+=light.ambient }
 		//return Color::darkBlue;
 		//return Color::vDarkBlue;
@@ -46,7 +46,7 @@ public:
 		return Color(0.1f);
 	}
 
-	Light getLight() {
+	Light getLight() const {
 		return light;
 	}
 
