@@ -50,11 +50,6 @@ int main(int argc, char* argv[]) {
 		startY += oneChunkHeight;
 	}
 
-	for(int i = 0; i < NUM_THREADS; i++) {
-		threads[i].join();
-	}
-
-
 	/**************************/
 	SDL_Event e;
 	bool quit = false;
