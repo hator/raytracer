@@ -1,0 +1,10 @@
+# Simple raytracer written in C++
+
+## Dependencies
+
+SDL2
+Doxygen (for documentation)
+
+## Screenshots
+
+![](screenshot1.png)
