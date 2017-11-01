@@ -7,3 +7,9 @@ ipch
 # gcc output
 obj/
 ray
+*.o
+
+# vim
+.*.un~
+.*.swo
+.*.swp
